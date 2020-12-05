@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Center from 'react-center'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Card} from '@material-ui/core'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+        <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

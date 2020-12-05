@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import random from './randomize.js';
+import ColorBoxes from './ColorBoxes';
+import ColorForm from './ColorForm'
 import './App.css';
+import {Card} from '@material-ui/core'
+
+let colors = ['red','yellow','green','pink','lightblue','purple']
+colors = random([...colors,...colors] )
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Card>
+        <ColorForm colors={[...colors]}/>
+      </Card>
+      <Card>
+        <ColorBoxes colors={[...colors]}/>
+      </Card>
+      
     </div>
   );
 }
