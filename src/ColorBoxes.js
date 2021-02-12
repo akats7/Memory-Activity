@@ -1,22 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,useContext} from 'react'
 import Box from './Box'
 import './ColorBoxes.css'
 import Button from '@material-ui/core/Button'
 import VisibleState from './hooks/visibleState'
+import {ColorsContext} from './context/colors.context'
 
 
-function ColorBoxes({colors}){
-    let colorsList = [...colors]
-    let visible = colorsList.map((x) => 0)
-    let {view, reset, flipBox, didWin} = VisibleState(visible);
-      
-    let grid = colorsList.map((color,index) => (
+function ColorBoxes(props){
+    let {color} = useContext(ColorsContext);
+    console.log(color)
+    let {view,reset,flipBox,didWin} = VisibleState(color)
+    
+    let grid = view.colors.map((color,index) => (
        <Box flip={()=>{(view.solvedBoxes[index] == 0 && 
             (index != view.flippedBoxes[0].index && index != view.flippedBoxes[1].index) && 
             !(view.flippedBoxes[1].index != -1 && view.flippedBoxes[0] != -1)  ) 
-            && flipBox(index,color)}} 
+            && flipBox(index,color.color)}} 
             color={ (view.solvedBoxes[index] || index == view.flippedBoxes[0].index || index == view.flippedBoxes[1].index) ? 
-            color :"black"}/>
+            color.color :"black"}/>
     ))
 
     return(

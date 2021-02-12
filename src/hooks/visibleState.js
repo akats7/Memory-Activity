@@ -1,21 +1,19 @@
 import React, {useState} from 'react'
 import random from '../randomize'
+import ColorContext from '../context/colors.context'
 
 export default function VisibleState(init){
-    // let colorsList = init
-    // let visibleMatrix = colorsList.map((x) => 0);
-    let [view, setView] = useState({solvedBoxes:init, flippedBoxes:[{index: -1,color:''},{index: -1,color:''}],clickCount: 0 });
+    let colorsList = random([...init,...init])
+    let blankMatrix = colorsList.map((x) => 0);
+    let [view, setView] = useState({colors:colorsList, solvedBoxes:blankMatrix, flippedBoxes:[{index: -1,color:''},{index: -1,color:''}],clickCount: 0 , edit: true});
     return {
         view: view,
-        // setBoard: () => {
-            
-        // },
         reset: () => {
-            let boxes = random(init)
-            setView({solvedBoxes:boxes,flippedBoxes: [{index: -1,color:''},{index: -1,color:''}],clickCount:0})
+            let boxes = random(colorsList)
+            setView({colors:boxes,solvedBoxes:blankMatrix,flippedBoxes: [{index: -1,color:''},{index: -1,color:''}],clickCount:0, edit: true})
         },
         flipBox:(index,color) => {
-            let flipped = [...view.flippedBoxes]
+            let flipped = [...view.flippedBoxes]     
             let boxes = [...view.solvedBoxes]
             console.log(flipped)
             console.log(boxes)
@@ -25,14 +23,14 @@ export default function VisibleState(init){
             else if(flipped[1].index == -1){
                 flipped[1] = {index:index,color:color}
             }
-            setView({solvedBoxes: boxes, flippedBoxes: flipped, clickCount: (view.clickCount + 1)})
+            setView({...view,solvedBoxes: boxes, flippedBoxes: flipped, clickCount: (view.clickCount + 1), edit: false})
                 if(flipped[1].index != -1){
                     setTimeout(() => {
                     if(flipped[0].color == flipped[1].color){
                         boxes[flipped[0].index] = boxes[flipped[1].index] = 1    
                     }
                     flipped = [{index: -1,color:''},{index: -1,color:''}]; 
-                    setView({solvedBoxes: boxes, flippedBoxes: flipped,clickCount:(view.clickCount + 1)}) 
+                    setView({...view,solvedBoxes: boxes, flippedBoxes: flipped,clickCount:(view.clickCount + 1)}) 
                },500) }
         },
         didWin(){
@@ -46,5 +44,6 @@ export default function VisibleState(init){
 
 
     }
+    
 
 }

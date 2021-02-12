@@ -4,13 +4,11 @@ const defaultColors = ['green','lightblue','red','yellow','purple','orange'];
 export const ColorsContext = createContext();
 
 export function ColorsProvider(props){
-    let {color} = ColorState();
-    console.log(color)
+    let {colors} = ColorState();
     return (
-        <ColorsContext.Provider value ={{color}}>
+        <ColorsContext.Provider value ={{colors}}>
             {props.children}
         </ColorsContext.Provider>
     )
 }
-
 
